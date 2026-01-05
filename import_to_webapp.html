@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Workout Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #c8e6c9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+        .routine-list {
+            margin: 20px 0;
+        }
+        .routine-item {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .routine-item h3 {
+            margin: 0 0 10px 0;
+            color: #2196F3;
+        }
+        .exercise {
+            margin: 5px 0 5px 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        .exercise-name {
+            font-weight: bold;
+            color: #333;
+        }
+        .exercise-details {
+            color: #666;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ Import Your Workout Routines</h1>
+
+        <div class="info">
+            <strong>Ready to import your complete workout routines!</strong><br>
+            This will load all 4 routines with exercises, sets, reps, and weights from your Excel file.
+        </div>
+
+        <div id="routines-preview" class="routine-list"></div>
+
+        <button onclick="importRoutines()">✅ Import Routines to Gym Tracker</button>
+        <button onclick="window.location.href='index.html'">📊 Open Gym Tracker</button>
+
+        <div id="success-message" class="success">
+            <strong>✅ Success!</strong> Your routines have been imported with all sets, reps, and weights. Click "Open Gym Tracker" to start logging workouts!
+        </div>
+    </div>
+
+    <script src="gym_data.json"></script>
+    <script>
+        const routinesData = {
+  "A - Push + Quadríceps": [
+    {
+      "name": "Supino Inclinado Smith",
+      "sets": 3,
+      "reps": 10,
+      "weight": 55.0
+    },
+    {
+      "name": "Chest Press Máquina",
+      "sets": 3,
+      "reps": 12,
+      "weight": 100.0
+    },
+    {
+      "name": "Desenvolvimento Máquina",
+      "sets": 3,
+      "reps": 10,
+      "weight": 65.0
+    },
+    {
+      "name": "Elevação Lateral",
+      "sets": 3,
+      "reps": 15,
+      "weight": 20.0
+    },
+    {
+      "name": "Tríceps Polia",
+      "sets": 3,
+      "reps": 12,
+      "weight": 50.0
+    },
+    {
+      "name": "Agachamento Smith",
+      "sets": 3,
+      "reps": 10,
+      "weight": 55.0
+    },
+    {
+      "name": "Cadeira Extensora",
+      "sets": 3,
+      "reps": 12,
+      "weight": 80.0
+    }
+  ],
+  "B - Pull + Posterior": [
+    {
+      "name": "Puxada Aberta Máquina",
+      "sets": 3,
+      "reps": 10,
+      "weight": 100.0
+    },
+    {
+      "name": "Remada Neutra Máquina",
+      "sets": 3,
+      "reps": 10,
+      "weight": 45.0
+    },
+    {
+      "name": "Remada Alta Halter",
+      "sets": 3,
+      "reps": 12,
+      "weight": 30.0
+    },
+    {
+      "name": "Bíceps Halter Martelo",
+      "sets": 3,
+      "reps": 12,
+      "weight": 30.0
+    },
+    {
+      "name": "Bíceps Polia",
+      "sets": 3,
+      "reps": 12,
+      "weight": 40.0
+    },
+    {
+      "name": "Stiff Smith",
+      "sets": 3,
+      "reps": 10,
+      "weight": 40.0
+    },
+    {
+      "name": "Cadeira Flexora",
+      "sets": 3,
+      "reps": 12,
+      "weight": 80.0
+    }
+  ],
+  "C - Legs": [
+    {
+      "name": "Leg Press",
+      "sets": 4,
+      "reps": 12,
+      "weight": 180.0
+    },
+    {
+      "name": "Agachamento Smith",
+      "sets": 3,
+      "reps": 10,
+      "weight": 55.0
+    },
+    {
+      "name": "Cadeira Extensora",
+      "sets": 3,
+      "reps": 12,
+      "weight": 80.0
+    },
+    {
+      "name": "Cadeira Flexora",
+      "sets": 3,
+      "reps": 12,
+      "weight": 80.0
+    },
+    {
+      "name": "Cadeira Abdutora",
+      "sets": 3,
+      "reps": 15,
+      "weight": 60.0
+    },
+    {
+      "name": "Cadeira Adutora",
+      "sets": 3,
+      "reps": 15,
+      "weight": 55.0
+    },
+    {
+      "name": "Panturrilha Leg Press",
+      "sets": 4,
+      "reps": 15,
+      "weight": 220.0
+    }
+  ],
+  "D - Upper": [
+    {
+      "name": "Supino Reto Smith",
+      "sets": 3,
+      "reps": 10,
+      "weight": 55.0
+    },
+    {
+      "name": "Puxada Supinada",
+      "sets": 3,
+      "reps": 10,
+      "weight": 100.0
+    },
+    {
+      "name": "Desenvolvimento Halter",
+      "sets": 3,
+      "reps": 10,
+      "weight": 30.0
+    },
+    {
+      "name": "Crucifixo Halter",
+      "sets": 3,
+      "reps": 12,
+      "weight": 25.0
+    },
+    {
+      "name": "Remada Cavalinho Halter",
+      "sets": 3,
+      "reps": 12,
+      "weight": 35.0
+    },
+    {
+      "name": "Tríceps Francês Polia",
+      "sets": 3,
+      "reps": 12,
+      "weight": 40.0
+    },
+    {
+      "name": "Bíceps Halter 45°",
+      "sets": 3,
+      "reps": 12,
+      "weight": 25.0
+    }
+  ]
+};
+
+        // Display routines preview
+        function displayRoutines() {
+            const container = document.getElementById('routines-preview');
+            let html = '<h2>Preview of Routines:</h2>';
+
+            for (const [name, exercises] of Object.entries(routinesData)) {
+                html += `<div class="routine-item"><h3>${name}</h3>`;
+
+                exercises.forEach((ex, idx) => {
+                    html += `<div class="exercise">
+                        ${idx + 1}. <span class="exercise-name">${ex.name}</span>
+                        <span class="exercise-details">${ex.sets}×${ex.reps} @ ${ex.weight} lb</span>
+                    </div>`;
+                });
+
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        function importRoutines() {
+            // Get existing data or create new
+            let gymData = localStorage.getItem('gymTrackerData');
+            if (gymData) {
+                gymData = JSON.parse(gymData);
+            } else {
+                gymData = {
+                    workouts: [],
+                    routines: {}
+                };
+            }
+
+            // Add the routines with full data
+            gymData.routines = { ...gymData.routines, ...routinesData };
+
+            // Save back to localStorage
+            localStorage.setItem('gymTrackerData', JSON.stringify(gymData));
+
+            // Show success message
+            document.getElementById('success-message').style.display = 'block';
+
+            console.log('Routines imported successfully with full data!', gymData);
+        }
+
+        // Display routines on page load
+        displayRoutines();
+    </script>
+</body>
+</html>

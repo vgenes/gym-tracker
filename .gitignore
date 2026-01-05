@@ -1,0 +1,22 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Excel files
+*.xlsx
+*.xls
+
+# Mac
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Python scripts (not needed for web app)
+import_workout.py
+gym_data.json
