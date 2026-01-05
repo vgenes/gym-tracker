@@ -558,5 +558,11 @@ class GymTracker {
 // Initialize app when DOM is loaded
 let app;
 document.addEventListener('DOMContentLoaded', () => {
-    app = new GymTracker();
+    // Check authentication first
+    const shouldInitApp = initAuth();
+
+    // Only initialize gym tracker if already authenticated
+    if (shouldInitApp) {
+        app = new GymTracker();
+    }
 });
