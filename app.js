@@ -304,21 +304,21 @@ class GymTracker {
                 return;
             }
 
+            const notes = card.querySelector('.exercise-notes').value.trim();
             const sets = [];
             const setRows = card.querySelectorAll('.set-row');
 
             setRows.forEach(row => {
                 const reps = parseInt(row.querySelector('.set-reps').value);
                 const weight = parseFloat(row.querySelector('.set-weight').value) || 0;
-                const notes = row.querySelector('.set-notes').value.trim();
 
                 if (reps) {
-                    sets.push({ reps, weight, notes });
+                    sets.push({ reps, weight });
                 }
             });
 
             if (sets.length > 0) {
-                exercises.push({ name, sets });
+                exercises.push({ name, sets, notes });
             }
         });
 
@@ -471,9 +471,9 @@ class GymTracker {
                             ${exercise.sets.map((set, i) => `
                                 <div class="history-set">
                                     Set ${i + 1}: ${set.reps} reps @ ${set.weight || 'bodyweight'}${set.weight ? ' lbs' : ''}
-                                    ${set.notes ? ` - ${set.notes}` : ''}
                                 </div>
                             `).join('')}
+                            ${exercise.notes ? `<div class="exercise-notes-display">📝 ${exercise.notes}</div>` : ''}
                         </div>
                     `).join('')}
                 </div>

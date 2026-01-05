@@ -219,17 +219,30 @@
             <div class="sets-container">
                 <!-- Sets will be added here -->
             </div>
-            <button class="add-set-btn btn btn-small">➕ Add Set</button>
+            <div class="exercise-footer">
+                <button class="add-set-btn btn btn-small">➕ Add Set</button>
+                <input type="text" class="exercise-notes" placeholder="Notes for this exercise (optional)">
+            </div>
         </div>
     </template>
 
     <!-- Set Template (hidden) -->
     <template id="set-template">
         <div class="set-row">
-            <span class="set-number">Set 1</span>
-            <input type="number" class="set-reps" placeholder="Reps" min="1" required>
-            <input type="number" class="set-weight" placeholder="Weight (lbs)" min="0" step="0.5">
-            <input type="text" class="set-notes" placeholder="Notes (optional)">
+            <div class="set-info">
+                <span class="set-label">Set</span>
+                <span class="set-number">1</span>
+            </div>
+            <div class="set-inputs">
+                <div class="input-group">
+                    <label>Reps</label>
+                    <input type="number" class="set-reps" placeholder="0" min="1" required>
+                </div>
+                <div class="input-group">
+                    <label>Weight</label>
+                    <input type="number" class="set-weight" placeholder="0" min="0" step="0.5">
+                </div>
+            </div>
             <button class="btn-remove-set">🗑️</button>
         </div>
     </template>

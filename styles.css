@@ -3,6 +3,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile touch optimizations */
+html {
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
 }
 
 :root {
@@ -313,6 +320,10 @@ textarea:focus {
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-block;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    min-height: 44px;
 }
 
 .btn-primary {
@@ -396,27 +407,76 @@ textarea:focus {
 
 /* Sets */
 .sets-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-bottom: 12px;
 }
 
 .set-row {
-    display: grid;
-    grid-template-columns: 60px 1fr 1fr 2fr 50px;
-    gap: 10px;
+    display: flex;
     align-items: center;
-    margin-bottom: 10px;
-    padding: 12px;
+    gap: 12px;
+    padding: 10px 12px;
     background: var(--bg-color);
     border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+}
+
+.set-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 45px;
+}
+
+.set-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .set-number {
-    font-weight: 600;
-    color: var(--text-secondary);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
 }
 
-.set-row input {
-    padding: 8px 12px;
+.set-inputs {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.input-group label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.input-group input {
+    padding: 8px 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .btn-remove-set {
@@ -425,15 +485,35 @@ textarea:focus {
     cursor: pointer;
     font-size: 1.2rem;
     padding: 4px;
+    flex-shrink: 0;
 }
 
 .btn-remove-set:hover {
     transform: scale(1.2);
 }
 
+.exercise-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
 .add-set-btn {
     width: 100%;
-    margin-top: 8px;
+}
+
+.exercise-notes {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.exercise-notes:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 /* History */
@@ -470,6 +550,17 @@ textarea:focus {
     margin-bottom: 4px;
     font-size: 0.95rem;
     color: var(--text-secondary);
+}
+
+.exercise-notes-display {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #fffbeb;
+    border-left: 3px solid #f59e0b;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-style: italic;
 }
 
 /* Routines */
@@ -639,57 +730,211 @@ footer {
     border-top: 2px solid var(--border-color);
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile First */
 @media (max-width: 768px) {
     body {
-        padding: 0;
+        padding: 10px;
     }
 
     .container {
-        border-radius: 0;
+        border-radius: 12px;
+    }
+
+    header {
+        padding: 20px 15px;
     }
 
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
     }
 
     .nav-tabs {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 6px;
+        padding: 12px 10px;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
     }
 
     .nav-btn {
-        font-size: 0.9rem;
-        padding: 12px 16px;
+        font-size: 0.85rem;
+        padding: 10px 14px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .logout-btn {
+        font-size: 0.85rem;
+        padding: 8px 14px;
     }
 
     main {
-        padding: 20px;
+        padding: 15px;
     }
 
+    /* Exercise cards optimized for mobile */
+    .exercise-card {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .exercise-name {
+        font-size: 1rem;
+    }
+
+    /* Compact set rows for mobile */
     .set-row {
-        grid-template-columns: 1fr;
-        gap: 8px;
+        padding: 8px 10px;
+        gap: 10px;
+    }
+
+    .set-info {
+        min-width: 40px;
+    }
+
+    .set-label {
+        font-size: 0.65rem;
     }
 
     .set-number {
-        text-align: center;
+        font-size: 1.2rem;
     }
 
+    .input-group {
+        flex: 1;
+    }
+
+    .input-group label {
+        font-size: 0.7rem;
+        margin-bottom: 3px;
+    }
+
+    .input-group input {
+        padding: 10px 8px;
+        font-size: 1rem;
+        /* Prevent zoom on iOS */
+        font-size: 16px;
+    }
+
+    .btn-remove-set {
+        font-size: 1.1rem;
+    }
+
+    .exercise-notes {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+
+    /* Stats grid */
     .stats-grid {
         grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
 
+    .stat-card {
+        padding: 16px;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    /* Buttons */
     .button-group {
         flex-direction: column;
+        gap: 10px;
     }
 
     .button-group .btn {
         width: 100%;
     }
+
+    .btn, .btn-primary, .btn-secondary {
+        padding: 14px;
+        font-size: 1rem;
+        /* Better touch targets */
+        min-height: 48px;
+    }
+
+    /* History items */
+    .history-item {
+        padding: 15px;
+    }
+
+    .history-exercise-name {
+        font-size: 1rem;
+    }
+
+    .history-set {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+
+    .exercise-notes-display {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    header {
+        padding: 15px 10px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .nav-tabs {
+        padding: 10px 8px;
+        gap: 4px;
+    }
+
+    .nav-btn {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    .logout-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    main {
+        padding: 12px;
+    }
+
     .stats-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .exercise-card {
+        padding: 12px;
+    }
+
+    .set-row {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .set-info {
+        min-width: 35px;
+    }
+
+    .set-number {
+        font-size: 1.1rem;
     }
 }
